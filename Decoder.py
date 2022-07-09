@@ -1,4 +1,5 @@
-"""Components specific to the decoder have been re-coded, following the same
+"""
+Components specific to the decoder have been re-coded, following the same
 structure as in the encoder classes, making explicit the slight variations
 appropriate for the decoder block.  The other classes/functions are imported from the Encoder.
 """
@@ -15,8 +16,8 @@ from Encoder import scaled_dot_product_attention, FeedForward, Embeddings, Trans
 class MaskedAttentionHead(nn.Module):
     def __init__(self, embed_dim, head_dim):
         """
-        Same as in encoder except mask is added in the forward
-        masked scores in the attention function:
+        Same as in encoder except mask is added in the forward.
+        Masked scores in the attention function:
         [score, -inf, -inf, ...]
         [score, score, -inf, ...]
         [score, score, score, -inf ...]
@@ -63,9 +64,9 @@ class MaskedMultiHeadAttention(nn.Module):
 class EncoderDecoderAttentionHead(nn.Module):
     """
     The MultiHeadAttention component in the decoder
-    uses the outputs of the encoder to project into the 
+    uses the outputs of the encoder and projects them into the 
     key and value spaces.  The decoder embeddings
-    passed from the masked multi head attention moduel 
+    passed from the masked multi head attention module 
     are projected into the query space.
     This class encodes a single head.
     """
@@ -88,7 +89,6 @@ class MultiHeadEncoderDecoderAttention(nn.Module):
     """
     Sames as for encoder MuliheadAttention except we need to pass the encoder output
     in the forward.
-
     """
     def __init__(self, config):
         super().__init__()
