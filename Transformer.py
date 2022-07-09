@@ -72,11 +72,12 @@ def main():
     # Output
     untrained_transformer = Transformer(config)
     logits = untrained_transformer(inputs_enc.input_ids, inputs_dec.input_ids)
-    # get top 10 predicted next tokens
+    # get top 10 predicted next tokens; get the last logits and order their ids in descending order
+    # convert the ids back to tokens
     top_10_next_tokens = tokenizer.convert_ids_to_tokens(torch.argsort(logits[:, -1, :], descending=True).squeeze(0)[:10])
     print(top_10_next_tokens)
-    # just to see th output... since model is not trained, the next token is likely to be irrelevant 
-    # with respect to the previous tokens
+    # just to see the output... since model is not trained, the next token is likely to be irrelevant... 
+    
 
 if __name__ == "__main__":
     main()
