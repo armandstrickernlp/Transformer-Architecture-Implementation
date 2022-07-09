@@ -36,11 +36,11 @@ class AttentionHead(nn.Module):
     -query
     -key
     -value
-    These projections are fed to the self-attention mecanism
+    These projections are fed to the self-attention mechanism
 
     The head_dim is a multiple of embed_dim.
-    IN t5-small case here, head_dim = 512 / 8 = 64 
-    See next class for head explanation.
+    In t5-small's case here, head_dim = 512 / 8 = 64 
+    See next class for explanation of what a head is.
     """
     def __init__(self, embed_dim, head_dim):
         super().__init__()
@@ -60,8 +60,8 @@ class AttentionHead(nn.Module):
 class MultiHeadAttention(nn.Module):
     """
     Embedding is projected into multiple query, key, value spaces so 
-    several "types" of attention can be performed (semantic vs. syntactic 
-    relations between tokens for ex.) These are known as attention heads.
+    several "types" of attention can be performed (semantic vs. syntactic attention
+    to understand relations between tokens for ex.) These are known as attention heads.
     Outputs of each attention head are concatenated together and then projected again. 
     """
     def __init__(self, config):
@@ -106,8 +106,8 @@ class FeedForward(nn.Module):
 
 class TransformerEncoderBlock(nn.Module):
     """
-    We add pre-layer normalization here (supposed to be more stable during training)
-    + skip connections
+    We add pre-layer normalization here (supposed to be more stable during training
+    than post-layer) + skip connections
     """
     def __init__(self, config):
         super().__init__()
@@ -129,7 +129,7 @@ class TransformerEncoderBlock(nn.Module):
 class Embeddings(nn.Module):
     """
     Want to add positional information when doing our 'fancy weighted sum'...
-    EAsy way to do so is add a trainable embedding layer, where instead of 
+    Easy way to do so is add a trainable embedding layer, where instead of 
     each entry being a *token* index, the entry is a *position* index.
     Positional embeddings are then learned during training.
     The final embedded input to the encoder blocks is the sum
@@ -180,11 +180,11 @@ def main():
     """
     model_ckpt = "t5-small"
     tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
-    config = AutoConfig.from_pretrained(model_ckpt) # config printed into a .txt file to look up each model hyperparameter
+    config = AutoConfig.from_pretrained(model_ckpt) # config printed into a .txt file to look up names of model hyperparameters
    
     # encoder input
     text_in = "I love New York, I want to try and move there one day."
-    inputs_enc = tokenizer(text_in, return_tensors='pt', add_special_tokens=False, padding=True) # if batch of examples
+    inputs_enc = tokenizer(text_in, return_tensors='pt', add_special_tokens=False, padding=True) # padding needed if batch of examples
     print(f"Input size : {inputs_enc.input_ids.size()}")
 
     # encoder output
